@@ -5,6 +5,7 @@ namespace Cmg.AspNetCore.FileValidation;
 /// <summary>
 /// Data validation attribute for validating file content types of an IFormFile or IFormFileCollection
 /// </summary>
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class ValidFileContentTypesAttribute : FileValidationAttributeBase
 {
     private readonly string _formattedTypes;

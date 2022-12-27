@@ -5,6 +5,7 @@ namespace Cmg.AspNetCore.FileValidation;
 /// <summary>
 /// Data validation attribute for validating file extensions of an IFormFile or IFormFileCollection
 /// </summary>
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class ValidFileExtensionsAttribute : FileValidationAttributeBase
 {
     private readonly string _formattedExtensions;
