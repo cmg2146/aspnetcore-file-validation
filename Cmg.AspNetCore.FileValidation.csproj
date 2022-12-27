@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Description>ASP.NET Core validation attributes to validate file uploads.</Description>
+    <PackageId>Cmg.AspNetCore.FileValidation</PackageId>
+    <PackageTags>aspnetcore;validation;files;uploads</PackageTags>
+    <Version>1.0.0</Version>
+    <Authors>Clark Granum</Authors>
+    <Company>CMG</Company>
+    <IsTrimmable>true</IsTrimmable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+</Project>
