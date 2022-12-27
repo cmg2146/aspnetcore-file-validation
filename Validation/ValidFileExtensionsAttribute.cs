@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Http;
 
 namespace Cmg.AspNetCore.FileValidation;
@@ -8,13 +10,12 @@ namespace Cmg.AspNetCore.FileValidation;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class ValidFileExtensionsAttribute : FileValidationAttributeBase
 {
-    private readonly string _formattedExtensions;
-
     /// <summary>
     /// File Extensions data validation attribute constructor
     /// </summary>
     /// <param name="extensions">List of valid file extensions. Include the dot.</param>
     public ValidFileExtensionsAttribute(params string[] extensions)
+        : base(() => DefaultErrorMessageString)
     {
         var loweredExtensions = extensions.Select(e => e.ToLowerInvariant()).ToArray();
 
@@ -27,13 +28,10 @@ public class ValidFileExtensionsAttribute : FileValidationAttributeBase
     /// </summary>
     public string[] ValidExtensions { get; }
 
-    /// <inheritdoc />
-    protected override string GetErrorMessage(IFormFile file) =>
-        $"{file.FileName} does not have a valid extension. Valid Extensions: {_formattedExtensions}.";
+    private static readonly string DefaultErrorMessageString =
+        "Invalid file extension in '{0}' field. Valid extensions: '{1}'.";
 
-    /// <inheritdoc />
-    protected override string GetErrorMessage(IFormFileCollection files) =>
-        $"One of the files does not have a valid extension. Valid Extensions: {_formattedExtensions}.";
+    private readonly string _formattedExtensions;
 
     /// <summary>
     /// Checks if a file has a valid extension
@@ -41,5 +39,15 @@ public class ValidFileExtensionsAttribute : FileValidationAttributeBase
     protected override bool IsValid(IFormFile file)
     {
         return ValidExtensions.Contains(Path.GetExtension(file.FileName).ToLowerInvariant());
+    }
+
+    /// <summary>
+    /// Override of <see cref="ValidationAttribute.FormatErrorMessage"/>
+    /// </summary>
+    /// <param name="name">The name to include in the formatted string</param>
+    /// <returns>A localized string to describe the allowed file extensions</returns>
+    public override string FormatErrorMessage(string name)
+    {
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _formattedExtensions);
     }
 }

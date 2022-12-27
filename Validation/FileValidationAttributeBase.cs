@@ -8,66 +8,46 @@ namespace Cmg.AspNetCore.FileValidation;
 /// </summary>
 public abstract class FileValidationAttributeBase : ValidationAttribute
 {
-    /// <summary>
-    /// Gets error message
-    /// </summary>
-    /// <param name="file">The file being validated.</param>
-    protected abstract string GetErrorMessage(IFormFile file);
-    /// <summary>
-    /// Gets error message
-    /// </summary>
-    /// <param name="files">The file collection being validated.</param>
-    protected abstract string GetErrorMessage(IFormFileCollection files);
+    /// <inheritdoc />
+    protected FileValidationAttributeBase(Func<string> errorMessageAccessor)
+        : base(errorMessageAccessor)
+    {
+
+    }
+
     /// <summary>
     /// Checks if file is valid
     /// </summary>
     /// <param name="file">The file to validate.</param>
     protected abstract bool IsValid(IFormFile file);
 
+    /// <summary>
+    /// Checks if all files are valid
+    /// </summary>
+    /// <param name="files">The files to validate.</param>
+    protected virtual bool IsValid(IFormFileCollection files)
+    {
+        return files.All(file => IsValid(file));
+    }
+
     /// <inheritdoc />
-    protected override ValidationResult? IsValid(
-        object? value,
-        ValidationContext validationContext)
+    public override bool IsValid(object? value)
     {
         if (value == null)
         {
-            return ValidationResult.Success;
+            return true;
         }
-        else if (value is IFormFile)
+        else if (value is IFormFile file)
         {
-            return IsValid((IFormFile)value, validationContext);
+            return IsValid(file);
         }
-        else if (value is IFormFileCollection)
+        else if (value is IFormFileCollection files)
         {
-            return IsValid((IFormFileCollection)value, validationContext);
+            return IsValid(files);
         }
         else
         {
-            return new ValidationResult($"Item to validate must be of type {nameof(IFormFile)} or {nameof(IFormFileCollection)}");
+            throw new ArgumentException("Value must be an IFormFile or IFormFileCollection type", nameof(value));
         }
-    }
-
-    private ValidationResult? IsValid(
-        IFormFile file,
-        ValidationContext validationContext)
-    {
-        if (!IsValid(file))
-        {
-            return new ValidationResult(GetErrorMessage(file));
-        }
-
-        return ValidationResult.Success;
-    }
-
-    private ValidationResult? IsValid(
-        IFormFileCollection files,
-        ValidationContext validationContext)
-    {
-        if (files.Any(file => !IsValid(file)))
-        {
-            return new ValidationResult(GetErrorMessage(files));
-        }
-
-        return ValidationResult.Success;
     }
 }

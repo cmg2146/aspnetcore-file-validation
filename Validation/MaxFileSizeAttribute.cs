@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Http;
 
 namespace Cmg.AspNetCore.FileValidation;
@@ -13,6 +15,7 @@ public class MaxFileSizeAttribute : FileValidationAttributeBase
     /// </summary>
     /// <param name="maxFileSizeBytes">Max valid file size in bytes.</param>
     public MaxFileSizeAttribute(long maxFileSizeBytes)
+        : base(() => DefaultErrorMessageString)
     {
         MaxFileSizeBytes = maxFileSizeBytes;
     }
@@ -22,13 +25,8 @@ public class MaxFileSizeAttribute : FileValidationAttributeBase
     /// </summary>
     public long MaxFileSizeBytes { get; }
 
-    /// <inheritdoc />
-    protected override string GetErrorMessage(IFormFile file) =>
-        $"{file.FileName} exceeds maximum allowed file size of {MaxFileSizeBytes} bytes.";
-
-    /// <inheritdoc />
-    protected override string GetErrorMessage(IFormFileCollection files) =>
-        $"One of the files exceeds the maximum allowed file size of {MaxFileSizeBytes} bytes.";
+    private static readonly string DefaultErrorMessageString =
+        "Max file size exceeded in '{0}' field. Max allowed file size is '{1}' bytes.";
 
     /// <summary>
     /// Checks if a file is within the size limit
@@ -36,5 +34,15 @@ public class MaxFileSizeAttribute : FileValidationAttributeBase
     protected override bool IsValid(IFormFile file)
     {
         return file.Length <= MaxFileSizeBytes;
+    }
+
+    /// <summary>
+    /// Override of <see cref="ValidationAttribute.FormatErrorMessage"/>
+    /// </summary>
+    /// <param name="name">The name to include in the formatted string</param>
+    /// <returns>A localized string to describe the max file size</returns>
+    public override string FormatErrorMessage(string name)
+    {
+        return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, MaxFileSizeBytes);
     }
 }
