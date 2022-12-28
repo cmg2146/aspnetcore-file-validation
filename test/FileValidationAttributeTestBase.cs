@@ -8,7 +8,7 @@ public class FileValidationAttributeTestBase
     public IFormFile FileToTest { get; init; }
     public const string NameOfFileToTest = "dc.jpg";
     public const long SizeOfFileToTest = 3047354;
-    public const string ExtensionOfFileToTest = ".jpg";
+    public const string ExtensionOfFileToTest = ".JPG";
     public const string ContentTypeOfFileToTest = "image/jpeg";
 
     public FileValidationAttributeTestBase()
