@@ -1,0 +1,12 @@
+*Dockerfile*
+*.dockerignore*
+*docker-compose*
+.git
+*.gitignore
+*.gitattributes
+*.editorconfig
+*.config
+*.bin
+*.obj
+*.vscode
+README.md

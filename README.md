@@ -20,6 +20,6 @@ dotnet new gitignore
 
 ## Installation
 
-Install the package from Nuget:
+TODO: Install the package from Nuget:
 
 ```dotnet add package Cmg.AspNetCore.FileValidation```
