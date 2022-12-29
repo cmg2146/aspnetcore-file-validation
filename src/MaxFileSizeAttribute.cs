@@ -8,7 +8,7 @@ namespace Cmg.AspNetCore.FileValidation;
 /// Data validation attribute for validating file size of an IFormFile or IFormFileCollection
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class MaxFileSizeAttribute : FileValidationAttributeBase
+public class MaxFileSizeAttribute : FileValidationAttribute
 {
     /// <summary>
     /// Max file size data validation attribute constructor

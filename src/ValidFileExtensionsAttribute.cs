@@ -8,7 +8,7 @@ namespace Cmg.AspNetCore.FileValidation;
 /// Data validation attribute for validating file extensions of an IFormFile or IFormFileCollection
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class ValidFileExtensionsAttribute : FileValidationAttributeBase
+public class ValidFileExtensionsAttribute : FileValidationAttribute
 {
     /// <summary>
     /// File Extensions data validation attribute constructor
@@ -17,10 +17,10 @@ public class ValidFileExtensionsAttribute : FileValidationAttributeBase
     public ValidFileExtensionsAttribute(params string[] extensions)
         : base(() => DefaultErrorMessageString)
     {
-        var loweredExtensions = extensions.Select(e => e.ToLowerInvariant()).ToArray();
+        var lowerCaseExtensions = extensions.Select(e => e.ToLowerInvariant()).ToArray();
 
-        _formattedExtensions = string.Join(", ", loweredExtensions);
-        ValidExtensions = loweredExtensions;
+        _formattedExtensions = string.Join(", ", lowerCaseExtensions);
+        ValidExtensions = lowerCaseExtensions;
     }
 
     /// <summary>

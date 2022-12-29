@@ -8,7 +8,7 @@ namespace Cmg.AspNetCore.FileValidation;
 /// Data validation attribute for validating file content types of an IFormFile or IFormFileCollection
 /// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-public class ValidFileContentTypesAttribute : FileValidationAttributeBase
+public class ValidFileContentTypesAttribute : FileValidationAttribute
 {
     /// <summary>
     /// File content types data validation attribute constructor
@@ -17,10 +17,10 @@ public class ValidFileContentTypesAttribute : FileValidationAttributeBase
     public ValidFileContentTypesAttribute(params string[] contentTypes)
         : base(() => DefaultErrorMessageString)
     {
-        var loweredTypes = contentTypes.Select(e => e.ToLowerInvariant()).ToArray();
+        var lowerCaseContentTypes = contentTypes.Select(e => e.ToLowerInvariant()).ToArray();
 
-        _formattedTypes = string.Join(", ", loweredTypes);
-        ValidContentTypes = loweredTypes;
+        _formattedTypes = string.Join(", ", lowerCaseContentTypes);
+        ValidContentTypes = lowerCaseContentTypes;
     }
 
     /// <summary>

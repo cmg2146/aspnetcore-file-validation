@@ -6,10 +6,10 @@ namespace Cmg.AspNetCore.FileValidation;
 /// <summary>
 /// Base data validation attribute for IFormFile and IFormFileCollection types
 /// </summary>
-public abstract class FileValidationAttributeBase : ValidationAttribute
+public abstract class FileValidationAttribute : ValidationAttribute
 {
     /// <inheritdoc />
-    protected FileValidationAttributeBase(Func<string> errorMessageAccessor)
+    protected FileValidationAttribute(Func<string> errorMessageAccessor)
         : base(errorMessageAccessor)
     {
 
