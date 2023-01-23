@@ -21,7 +21,7 @@ dotnet new gitignore
 
 ## Installation
 
-TODO: Set Github actions and Github packages to push Nuget package
+`dotnet add package Cmg.AspNetCore.FileValidation -s "https://nuget.pkg.github.com/cmg2146/index.json"`
 
 ## Usage
 

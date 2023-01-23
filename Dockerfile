@@ -17,5 +17,5 @@ RUN ["dotnet", "test"]
 
 # build and push package to nuget repository
 WORKDIR /app/src
-RUN ["dotnet", "pack", "-c", "release", "--no-restore"]
-RUN dotnet nuget push *.nupkg -s $NUGET_PUSH_SOURCE --api-key $NUGET_API_KEY
+RUN ["dotnet", "pack", "-c", "Release", "--no-restore"]
+RUN dotnet nuget push "*.nupkg" -s $NUGET_PUSH_SOURCE -k $NUGET_API_KEY
