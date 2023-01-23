@@ -1,0 +1,23 @@
+name: Publish Nuget Package
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - README.md
+      - .vscode/**
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: >
+        docker build .
+        --build-arg NUGET_PUSH_SOURCE=https://nuget.pkg.github.com/cmg2146/index.json
+        --build-arg NUGET_API_KEY=${{ secrets.GITHUB_TOKEN }}
+        --tag aspnetcore-file-validation:$(date +%s)
