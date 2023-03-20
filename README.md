@@ -8,7 +8,7 @@ type can be validated.
 
 This library does not perform advanced file validation. The validation attributes only use the
 metadata available in IFormFile and do not read the contents of the file. This type of validation
-will not work against malicious users who tamper with the files or request headers.
+will not work against malicious users who tamper with the files or the request.
 
 This class library was created with the .NET CLI command:
 
